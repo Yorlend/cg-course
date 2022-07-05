@@ -2,7 +2,7 @@
 #include "gtkrenderfactory.hpp"
 #include "gtkrenderer.hpp"
 
-GtkRenderFactory::GtkRenderFactory(Gtk::DrawingArea &drawingArea) : drawingArea(drawingArea)
+GtkRenderFactory::GtkRenderFactory(Glib::RefPtr<Gtk::DrawingArea>& drawingArea) : drawingArea(drawingArea)
 {
 }
 

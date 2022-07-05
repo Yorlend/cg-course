@@ -6,7 +6,7 @@
 class GtkRenderer : public IRenderer
 {
 public:
-    GtkRenderer(Gtk::DrawingArea &drawingArea);
+    GtkRenderer(Glib::RefPtr<Gtk::DrawingArea>& drawingArea);
     
     virtual void clear() override;
     virtual void renderLine(const Vector &p1, const Vector &p2) override;
@@ -14,6 +14,6 @@ public:
 private:
     bool drawHandler(const Cairo::RefPtr<Cairo::Context>& ctx);
 
-    Gtk::DrawingArea &drawingArea;
+    Glib::RefPtr<Gtk::DrawingArea> drawingArea;
     Cairo::RefPtr<Cairo::ImageSurface> pixbuf;
 };

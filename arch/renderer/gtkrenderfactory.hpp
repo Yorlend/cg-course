@@ -6,11 +6,11 @@
 class GtkRenderFactory : public IRenderFactory
 {
 public:
-    GtkRenderFactory(Gtk::DrawingArea &drawingArea);
+    GtkRenderFactory(Glib::RefPtr<Gtk::DrawingArea>& drawingArea);
 
     virtual std::shared_ptr<IRenderer> createRenderer() override;
 
 private:
-    Gtk::DrawingArea &drawingArea;
+    Glib::RefPtr<Gtk::DrawingArea> drawingArea;
     std::shared_ptr<IRenderer> renderer;
 };

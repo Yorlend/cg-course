@@ -12,8 +12,21 @@
 #include "arch/commands/objectcommands.hpp"
 
 MainWindow::MainWindow(Solution& solution)
+    : ui{Gtk::Builder::create_from_file("ui/resources/design.glade")}
 {
-    add(drawingArea);
+    if (!ui)
+    {
+        throw std::runtime_error("Failed to load ui/resources/design.glade");
+    }
+
+    ui->get_widget<Gtk::Box>("top_container", top_container);
+
+    testLabel = Glib::RefPtr<Gtk::Label>::cast_dynamic(ui->get_object("testLabel"));
+    testButton = Glib::RefPtr<Gtk::Button>::cast_dynamic(ui->get_object("testButton"));
+    drawingArea = Glib::RefPtr<Gtk::DrawingArea>::cast_dynamic(ui->get_object("drawingArea"));
+    add(*top_container);
+
+    testButton->signal_clicked().connect(sigc::mem_fun(*this, &MainWindow::on_button_clicked));
 
     auto factory = std::make_shared<GtkRenderFactory>(drawingArea);
     solution.registerRenderFactory(GTK_RENDER_FACTORY, factory);
@@ -23,7 +36,6 @@ MainWindow::MainWindow(Solution& solution)
 
     set_title("WATER IN THE FIRE");
     set_default_size(800, 600);
-    set_border_width(10);
     set_position(Gtk::WIN_POS_CENTER);
     set_resizable(false);
 
@@ -52,4 +64,11 @@ MainWindow::MainWindow(Solution& solution)
 
 MainWindow::~MainWindow()
 {
+    delete top_container;
+}
+
+void MainWindow::on_button_clicked()
+{
+    static int click_count;
+    testLabel->set_text("Clicked " + std::to_string(++click_count) + " times.");
 }

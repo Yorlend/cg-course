@@ -4,7 +4,7 @@
         "name": "(gdb) Launch",
         "type": "cppdbg",
         "request": "launch",
-        "program": "${workspaceFolder}/build/src/fluidsim",
+        "program": "${workspaceFolder}/build/ui/fluidsim",
         "args": [],
         "stopAtEntry": false,
         "cwd": "${workspaceFolder}",

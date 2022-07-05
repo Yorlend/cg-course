@@ -40,5 +40,8 @@
         "/usr/include/gdkmm-3.0",
         "/usr/lib/gdkmm-3.0/include",
     ],
-    "C_Cpp.default.configurationProvider": "ms-vscode.cmake-tools"
+    "C_Cpp.default.configurationProvider": "ms-vscode.cmake-tools",
+    "files.associations": {
+        "queue": "cpp"
+    }
 }

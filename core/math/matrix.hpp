@@ -61,6 +61,8 @@ namespace Core
                     m[i][j] = other.m[i][j];
                 }
             }
+
+            return *this;
         }
     };
 }

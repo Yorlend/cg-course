@@ -4,8 +4,36 @@
 #include "arch/directors/modeldirector.hpp"
 #include "arch/directors/defaultcamdirector.hpp"
 
+#include "core/math/matrix.hpp"
+#include <iostream>
+
 int main(int argc, char *argv[])
 {
+    // // random 4x4 matrix
+    // Core::Matrix mat{
+    //     1, 9, 3, 4,
+    //     5, 6, 7, 40,
+    //     9, 10, 11, 12,
+    //     11, 14, 15, 16
+    // };
+    
+    // // inversed matrix
+    // Core::Matrix inv = inverse(mat);
+
+    // Core::Matrix result = mat * identity();
+
+    // // print result matrix
+    // for (int i = 0; i < 4; i++)
+    // {
+    //     for (int j = 0; j < 4; j++)
+    //     {
+    //         std::cout << result.m[i][j] << " ";
+    //     }
+    //     std::cout << std::endl;
+    // }
+
+    // return 0;
+
     Solution solution;
 
     solution.registerDataRepository(DEFAULT_DATA_REPOSITORY,

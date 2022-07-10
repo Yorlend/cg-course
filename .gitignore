@@ -1,1 +1,7 @@
 build
+docs/*.aux
+docs/*.log
+docs/*.out
+docs/*.pdf
+docs/*.toc
+docs/*.synctex.gz

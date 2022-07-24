@@ -2,3 +2,9 @@ build
 ui/resources/#design.glade#
 ui/resources/main_window.glade
 ui/resources/main_window.glade~
+docs/*.aux
+docs/*.log
+docs/*.out
+docs/*.pdf
+docs/*.toc
+docs/*.synctex.gz

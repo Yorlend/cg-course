@@ -1,1 +1,4 @@
 build
+ui/resources/#design.glade#
+ui/resources/main_window.glade
+ui/resources/main_window.glade~

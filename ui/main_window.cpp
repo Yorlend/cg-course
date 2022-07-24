@@ -12,21 +12,62 @@
 #include "arch/commands/objectcommands.hpp"
 
 MainWindow::MainWindow(Solution& solution)
-    : ui{Gtk::Builder::create_from_file("ui/resources/design.glade")}
+    : ui{Gtk::Builder::create_from_file("ui/resources/main_window.glade")}
 {
     if (!ui)
     {
-        throw std::runtime_error("Failed to load ui/resources/design.glade");
+        throw std::runtime_error("Failed to load ui/resources/main_window.glade");
     }
 
-    ui->get_widget<Gtk::Box>("top_container", top_container);
+    ui->get_widget<Gtk::Box>("topContainer", topContainer);
 
-    testLabel = Glib::RefPtr<Gtk::Label>::cast_dynamic(ui->get_object("testLabel"));
-    testButton = Glib::RefPtr<Gtk::Button>::cast_dynamic(ui->get_object("testButton"));
+    // loading sceneBox internals
+    sceneName = Glib::RefPtr<Gtk::Label>::cast_static(ui->get_object("sceneName"));
+    itemList = Glib::RefPtr<Gtk::ListBox>::cast_static(ui->get_object("itemList"));
+    deleteButton = Glib::RefPtr<Gtk::Button>::cast_static(ui->get_object("deleteButton"));
+    editButton = Glib::RefPtr<Gtk::Button>::cast_static(ui->get_object("editButton"));
+
+    // loading paramsBox internals
+    dxSpinButton = Glib::RefPtr<Gtk::SpinButton>::cast_static(ui->get_object("dxSpinButton"));
+    dySpinButton = Glib::RefPtr<Gtk::SpinButton>::cast_static(ui->get_object("dySpinButton"));
+    dzSpinButton = Glib::RefPtr<Gtk::SpinButton>::cast_static(ui->get_object("dzSpinButton"));
+
+    kxSpinButton = Glib::RefPtr<Gtk::SpinButton>::cast_static(ui->get_object("kxSpinButton"));
+    kySpinButton = Glib::RefPtr<Gtk::SpinButton>::cast_static(ui->get_object("kySpinButton"));
+    kzSpinButton = Glib::RefPtr<Gtk::SpinButton>::cast_static(ui->get_object("kzSpinButton"));
+
+    axSpinButton = Glib::RefPtr<Gtk::SpinButton>::cast_static(ui->get_object("axSpinButton"));
+    aySpinButton = Glib::RefPtr<Gtk::SpinButton>::cast_static(ui->get_object("aySpinButton"));
+    azSpinButton = Glib::RefPtr<Gtk::SpinButton>::cast_static(ui->get_object("azSpinButton"));
+
+    cxSpinButton = Glib::RefPtr<Gtk::SpinButton>::cast_static(ui->get_object("cxSpinButton"));
+    cySpinButton = Glib::RefPtr<Gtk::SpinButton>::cast_static(ui->get_object("cySpinButton"));
+    czSpinButton = Glib::RefPtr<Gtk::SpinButton>::cast_static(ui->get_object("czSpinButton"));
+
+    posApplyButton = Glib::RefPtr<Gtk::Button>::cast_static(ui->get_object("posApplyButton"));
+    rotationApplyButton = Glib::RefPtr<Gtk::Button>::cast_static(ui->get_object("rotApplyButton"));
+    scaleApplyButton = Glib::RefPtr<Gtk::Button>::cast_static(ui->get_object("scaleApplyButton"));
+
+    // loading simulationBox internals
+    viscositySpinButton = Glib::RefPtr<Gtk::SpinButton>::cast_static(ui->get_object("viscositySpinButton"));
+    densitySpinButton = Glib::RefPtr<Gtk::SpinButton>::cast_static(ui->get_object("densitySpinButton"));
+    gravitySpinButton = Glib::RefPtr<Gtk::SpinButton>::cast_static(ui->get_object("gravitySpinButton"));
+
+    applySimButton = Glib::RefPtr<Gtk::Button>::cast_static(ui->get_object("applySimButton"));
+    resetSimButton = Glib::RefPtr<Gtk::Button>::cast_static(ui->get_object("resetSimButton"));
+
+    // loading drawingArea
     drawingArea = Glib::RefPtr<Gtk::DrawingArea>::cast_dynamic(ui->get_object("drawingArea"));
-    add(*top_container);
 
-    testButton->signal_clicked().connect(sigc::mem_fun(*this, &MainWindow::on_button_clicked));
+    // loading controlBox
+    loadButton = Glib::RefPtr<Gtk::Button>::cast_static(ui->get_object("loadButton"));
+    saveButton = Glib::RefPtr<Gtk::Button>::cast_static(ui->get_object("saveButton"));
+    renderButton = Glib::RefPtr<Gtk::Button>::cast_static(ui->get_object("renderButton"));
+    newSceneButton = Glib::RefPtr<Gtk::Button>::cast_static(ui->get_object("newSceneButton"));
+    preloadSimulationButton = Glib::RefPtr<Gtk::Button>::cast_static(ui->get_object("preloadSimulationButton"));
+    startSimulationButton = Glib::RefPtr<Gtk::Button>::cast_static(ui->get_object("startSimulationButton"));
+
+    add(*topContainer);
 
     auto factory = std::make_shared<GtkRenderFactory>(drawingArea);
     solution.registerRenderFactory(GTK_RENDER_FACTORY, factory);
@@ -34,10 +75,10 @@ MainWindow::MainWindow(Solution& solution)
     auto provider = ManagerCreator().createProvider(solution);
     facade = std::make_shared<Facade>(std::move(provider));
 
-    set_title("WATER IN THE FIRE");
-    set_default_size(800, 600);
+    set_title("Water simulation");
+    set_default_size(1400, 800);
     set_position(Gtk::WIN_POS_CENTER);
-    set_resizable(false);
+    set_resizable(true);
 
     show_all();
 
@@ -64,11 +105,5 @@ MainWindow::MainWindow(Solution& solution)
 
 MainWindow::~MainWindow()
 {
-    delete top_container;
-}
-
-void MainWindow::on_button_clicked()
-{
-    static int click_count;
-    testLabel->set_text("Clicked " + std::to_string(++click_count) + " times.");
+    delete topContainer;
 }
